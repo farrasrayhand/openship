@@ -533,7 +533,7 @@ function MailStackToolsSection({ serverId }: { serverId: string }) {
               setRestarting(true);
               try {
                 const res = await mailAdminApi.components.migrateToContainer(serverId);
-                showToast(res.message, res.migrated ? "success" : "info");
+                showToast(res.message, res.migrated ? "success" : "error");
               } catch (err) {
                 showToast(err instanceof Error ? err.message : "Migration failed", "error");
               } finally {
