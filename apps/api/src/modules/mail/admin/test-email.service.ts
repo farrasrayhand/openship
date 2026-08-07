@@ -273,7 +273,7 @@ export async function sendTestEmail(
   // then connects to 127.0.1.1 inside its OWN namespace, where nothing
   // listens, and every send fails with `ECONNREFUSED 127.0.1.1:465` while
   // Postfix is healthy on 0.0.0.0:465. `servername` keeps TLS validating
-  // against the hostname, so certificate checking is unchanged.
+  const connectHost = await resolveSubmissionAddress(smtpHost);
   let transporter: Transporter = nodemailer.createTransport({
     host: connectHost,
     tls: { servername: smtpHost },
