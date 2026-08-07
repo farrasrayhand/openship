@@ -310,7 +310,11 @@ export async function configureOutboundRelay(
     "smtp_sasl_security_options=noanonymous",
     "smtp_tls_security_level=may",
   ];
-  if (input.port === 465) sasl.push("smtp_tls_wrappermode=yes"); // implicit-TLS submission
+  if (input.port === 465) {
+    sasl.push("smtp_tls_wrappermode=yes");
+  } else {
+    await exec.exec(engine("postconf -X smtp_tls_wrappermode") + " 2>/dev/null || true");
+  }
 
   if (scope === "all") {
     await exec.exec(engine(`postconf -e ${[`relayhost=${nexthop}`, ...sasl].map(sq).join(" ")}`));
