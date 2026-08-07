@@ -3,7 +3,8 @@
  */
 
 import { detectMailEngine, ensureContainerMail } from "@repo/adapters";
-import { acquireMailExecutor, readState } from "../mail-engine";
+import { acquireMailExecutor } from "../mail-engine";
+import { readState } from "../mail-state";
 
 export async function migrateMailEngineToContainer(
   serverId: string,
